@@ -1,20 +1,27 @@
-CURRENTDATE=` date +"%Y-%m-%d" -d "-1 day"`
+CURRENTDATE=` date +"%Y-%m-%d" -d "-1 hour"`
 CURRENTDATE=$CURRENTDATE
 
-STRINGMATCH= 'Error'
+CURRENTHOUR=` date +"%m-%d-%Y @ %H" -d "-1 hour"`
+CURRENTHOUR=$CURRENTHOUR
 
 echo "Looking up errors in Ooyala logs for :"
 echo $CURRENTDATE
-echo "\n\n"
+
+echo "Hour :"
+echo $CURRENTHOUR
 
 wget http://u1819.uolsite.univision.com/applogs/mylog_$CURRENTDATE
 
-grep -C 3 'Error' mylog_$CURRENTDATE
-
-echo "\n\nFailed ingestions for :"
-grep -C 3 'Error' mylog_$CURRENTDATE | grep "Start send request GET: /v2/assets/.* to Ooyala api" | grep -o '[0-9]\{5,7\}'
-
-echo "\n\nNumber of error reports in logs :"
+echo ""
+echo "Number of error reports in logs :"
 grep -c 'Error' mylog_$CURRENTDATE
+
+echo ""
+echo "Errors in last hour :"
+grep -C 3 'Error' mylog_$CURRENTDATE | grep "$CURRENTHOUR:.*:.*Start send request GET: /v2/assets/.* to Ooyala api" | grep -o '[0-9]\{5,7\}'
+
+echo ""
+echo "Details from Log :"
+grep -C 3 "$CURRENTHOUR:.*:.* Error" mylog_$CURRENTDATE
 
 rm mylog_$CURRENTDATE

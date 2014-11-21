@@ -13,8 +13,12 @@ echo $CURRENTHOUR
 wget http://u1819.uolsite.univision.com/applogs/mylog_$CURRENTDATE
 
 echo ""
-echo "Number of error reports in logs :"
+echo "Total number of error reports in logs :"
 grep -c 'Error' mylog_$CURRENTDATE
+
+echo ""
+echo "Number of errors in last hour :"
+grep -c "$CURRENTHOUR:.*:.* Error" mylog_$CURRENTDATE
 
 echo ""
 echo "Errors in last hour :"
@@ -23,5 +27,6 @@ grep -C 3 'Error' mylog_$CURRENTDATE | grep "$CURRENTHOUR:.*:.*Start send reques
 echo ""
 echo "Details from Log :"
 grep -C 3 "$CURRENTHOUR:.*:.* Error" mylog_$CURRENTDATE
+echo ""
 
 rm mylog_$CURRENTDATE

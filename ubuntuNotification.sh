@@ -17,4 +17,4 @@ if [ -r ~/.dbus/Xdbus ]; then
 fi
 
 notify-send "Time Check" "$(date)" -i ~/usefulScripts/logo.png -t 5000
-paplay ~/usefulScripts/beep.ogg
+# paplay ~/usefulScripts/beep.ogg

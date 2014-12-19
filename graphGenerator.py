@@ -230,7 +230,7 @@ def checkForMonthYear(lookupYear, lookupMonth):
 		if lookupMonthInt > int(currentMonth):
 			return
 		elif lookupMonthInt == int(currentMonth):
-			numberOfDays = int(currentDay) - 1
+			numberOfDays = int(currentDay)
 
 	elif lookupYearInt > currentYear:
 		return
@@ -276,7 +276,7 @@ def generateChart(fileName):
 	global errorList
 
 	bar_chart = pygal.Bar()
-	bar_chart.title = errorKey
+	bar_chart.title = fileName
 	bar_chart.x_labels = map(str, range(x_min, x_max))
 	bar_chart.add('Errors', errorList)
 	bar_chart.render_to_file('graph/' + fileName + '.svg')

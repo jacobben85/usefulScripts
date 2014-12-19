@@ -122,7 +122,7 @@ def checkForDate(dateValue):
 def checkCurrentMonth():
 	global x_min
 	global x_max
-	
+
 	currentDay = time.strftime("%d")
 	currentDate = int(currentDay)
 
@@ -200,18 +200,91 @@ def checkTodayByHour():
 def checkLastMonth():
 
 	today = datetime.datetime.now();
-	diff  = datetime.timedelta(months=1)
+	currentDay = today.strftime("%d")
+	currentDay = int(currentDay) + 1
+	diff = datetime.timedelta(days=currentDay)
 	lastMonth = today - diff
+
+	lookupMonth = lastMonth.strftime("%m")
+	lookupYear = lastMonth.strftime("%Y")
+
+	checkForMonthYear(lookupYear, lookupMonth)
+
+
+def checkForMonthYear(lookupYear, lookupMonth):
+	global x_min
+	global x_max
+
+	lookupMonthInt = int(lookupMonth)
+	lookupYearInt = int(lookupYear)
+
+	monthRange = calendar.monthrange(lookupYearInt, lookupMonthInt)
+	numberOfDays = monthRange[1]
+
+	dateKey  = datetime.datetime.now();
+	currentYear = dateKey.strftime("%Y")
+	currentMonth = dateKey.strftime("%m")
+	currentDay = dateKey.strftime("%d")
+
+	if lookupYearInt == int(currentYear):
+		if lookupMonthInt > int(currentMonth):
+			return
+		elif lookupMonthInt == int(currentMonth):
+			numberOfDays = int(currentDay) - 1
+
+	elif lookupYearInt > currentYear:
+		return
+
+
+	x_min = 1
+	x_max = numberOfDays + 1
+
+	processing = 0
+
+	while (processing < numberOfDays):
+		processing = processing + 1
+		dateForLookup = lookupYear + '-' + lookupMonth + '-' + str(processing)
+
+		if processing < 10:
+			dateForLookup = lookupYear + '-' + lookupMonth + '-0' + str(processing)
+
+		checkForDate(dateForLookup)
+
+
+def checkForTheMonth():
+	checkForMonthYear('2014', '08')
+
+def checkForTheYear():
+	global errorList
+
+	months = 12
+	while (months > 0):
+		months = months
+		monthStr = str(months)
+		if months < 10:
+			monthStr = '0' + str(months)
+
+		errorList[:] = []
+		checkForMonthYear('2014', monthStr)
+		generateChart(monthStr)
+		months = months - 1
+
+def generateChart(fileName):
+	global errorKey
+	global x_min
+	global x_max
+	global errorList
+
+	bar_chart = pygal.Bar()
+	bar_chart.title = errorKey
+	bar_chart.x_labels = map(str, range(x_min, x_max))
+	bar_chart.add('Errors', errorList)
+	bar_chart.render_to_file('graph/' + fileName + '.svg')
 
 
 # checkTodayByHour()
 # checkYesterday()
 # checkCurrentMonth()
-checkLastMonth()
-
-
-bar_chart = pygal.Bar()
-bar_chart.title = 'Error count'
-bar_chart.x_labels = map(str, range(x_min, x_max))
-bar_chart.add('Errors', errorList)
-bar_chart.render_to_file('chart.svg')
+# checkLastMonth()
+# checkForTheMonth()
+checkForTheYear()

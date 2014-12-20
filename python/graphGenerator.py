@@ -1,20 +1,22 @@
-import urllib
+import calendar
+import datetime
 import os
 import time
-import datetime
+import urllib
+import webbrowser
+
 import pygal
-import calendar
 
 
 # the workspace folder
 # and temporary file used
 # source path
 workspaceFolder = '/tmp/'
-tempFileName    = 'ingestion.log'
-sourcePath      = 'http://u1819.uolsite.univision.com/applogs/'
+tempFileName = 'ingestion.log'
+sourcePath = 'http://u1819.uolsite.univision.com/applogs/'
 
 # The Error look up key
-errorKey        = 'HTTP Error'
+errorKey = 'HTTP Error'
 
 # List with the errors
 errorList = []
@@ -42,7 +44,7 @@ def checkLastHour():
 
 	logCheckDate = time.strftime("%Y-%m-%d")
 
-	today   = datetime.datetime.now();
+	today = datetime.datetime.now();
 	oneHour = datetime.timedelta(hours=3)
 	lastHour = today - oneHour
 	logCheckHour = lastHour.strftime("%m-%d-%Y @ %H")
@@ -63,11 +65,11 @@ def checkByDateAndByHour(dateString, hourString):
 
 	logfile = open(workspaceFolder + tempFileName, "r")
 	for line in logfile:
-	    if line.find(errorKey) > -1:
-	        if line.find(hourString) > -1:
-	            count = count + 1
+		if line.find(errorKey) > -1:
+			if line.find(hourString) > -1:
+				count = count + 1
 
-	#print hourString + " : " + str(count)
+	# print hourString + " : " + str(count)
 	errorList.append(count)
 
 	deleteFile()
@@ -79,7 +81,7 @@ def checkToday():
 	checkForDate(logCheckDate)
 
 
-#check errors yesterday
+# check errors yesterday
 def checkYesterday():
 	global x_min
 	global x_max
@@ -88,10 +90,10 @@ def checkYesterday():
 	x_max = 24
 
 	today = datetime.datetime.now();
-	diff  = datetime.timedelta(days=1)
-	yest  = today - diff
+	diff = datetime.timedelta(days=1)
+	yest = today - diff
 	logCheckYest = yest.strftime("%Y-%m-%d")
-	logLookUp    = yest.strftime("%m-%d-%Y")
+	logLookUp = yest.strftime("%m-%d-%Y")
 	checkDateByHour(logCheckYest, logLookUp)
 
 
@@ -109,8 +111,8 @@ def checkForDate(dateValue):
 
 	logfile = open(workspaceFolder + tempFileName, "r")
 	for line in logfile:
-	    if line.find(errorKey) > -1:
-	        count = count + 1
+		if line.find(errorKey) > -1:
+			count = count + 1
 
 	# print dateValue + " : " + str(count)
 	errorList.append(count)
@@ -131,7 +133,7 @@ def checkCurrentMonth():
 
 	while (currentDate > 0):
 		currentDate = currentDate - 1
-		today  = datetime.datetime.now();
+		today = datetime.datetime.now();
 		differ = datetime.timedelta(days=currentDate)
 		datekey = today - differ
 		logFile = datekey.strftime("%Y-%m-%d")
@@ -151,7 +153,7 @@ def checkDateByHour(dateString, logLookUp):
 	count = 0
 	timeString = 23
 
-	today  = datetime.datetime.now();
+	today = datetime.datetime.now();
 	todayString = today.strftime("%Y-%m-%d")
 
 	if (todayString == dateString):
@@ -176,13 +178,13 @@ def checkDateByHour(dateString, logLookUp):
 		logCheckHour = logLookUp + " @ " + hours
 
 		for line in logfile:
-		    if line.find(errorKey) > -1:
-		        if line.find(logCheckHour) > -1:
-		            count = count + 1
+			if line.find(errorKey) > -1:
+				if line.find(logCheckHour) > -1:
+					count = count + 1
 
 		timeString = timeString - 1
 
-		#print logCheckHour + " : " + str(count)
+		# print logCheckHour + " : " + str(count)
 		errorList.append(count)
 
 	deleteFile()
@@ -190,9 +192,9 @@ def checkDateByHour(dateString, logLookUp):
 
 # check errors today
 def checkTodayByHour():
-	datekey  = datetime.datetime.now();
+	datekey = datetime.datetime.now();
 	dateString = datekey.strftime("%Y-%m-%d")
-	logLookUp  = datekey.strftime("%m-%d-%Y")
+	logLookUp = datekey.strftime("%m-%d-%Y")
 	checkDateByHour(dateString, logLookUp)
 
 
@@ -221,7 +223,7 @@ def checkForMonthYear(lookupYear, lookupMonth):
 	monthRange = calendar.monthrange(lookupYearInt, lookupMonthInt)
 	numberOfDays = monthRange[1]
 
-	dateKey  = datetime.datetime.now();
+	dateKey = datetime.datetime.now();
 	currentYear = dateKey.strftime("%Y")
 	currentMonth = dateKey.strftime("%m")
 	currentDay = dateKey.strftime("%d")
@@ -288,3 +290,9 @@ def generateChart(fileName):
 # checkLastMonth()
 # checkForTheMonth()
 checkForTheYear()
+
+
+new = 2  # open in a new tab, if possible
+# open a public URL, in this case, the webbrowser docs
+url = "file:///Users/jbjohn/Documents/usefulScripts/python/errorGraph.html"
+webbrowser.open(url, new=new)

@@ -289,10 +289,11 @@ def generateChart(fileName):
 # checkCurrentMonth()
 # checkLastMonth()
 # checkForTheMonth()
-checkForTheYear()
+# checkForTheYear()
 
+currentDir = os.path.dirname(os.path.realpath(__file__))
 
 new = 2  # open in a new tab, if possible
 # open a public URL, in this case, the webbrowser docs
-url = "file:///Users/jbjohn/Documents/usefulScripts/python/errorGraph.html"
+url = "file://" + currentDir + "/errorGraph.html"
 webbrowser.open(url, new=new)

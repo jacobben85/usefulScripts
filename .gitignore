@@ -6,3 +6,7 @@
 python/.project
 
 python/.pydevproject
+
+*.svg
+
+*.pyc

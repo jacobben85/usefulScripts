@@ -1,0 +1,6 @@
+success XML
+success XML
+Traceback (most recent call last):
+  File "mogreetPingTest.py", line 47, in <module>
+    time.sleep(60)
+KeyboardInterrupt

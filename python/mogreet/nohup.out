@@ -1,0 +1,5 @@
+nohup: mogreet.sh: No such file or directory
+Traceback (most recent call last):
+  File "mogreetPingTest.py", line 51, in <module>
+    time.sleep(60)
+KeyboardInterrupt

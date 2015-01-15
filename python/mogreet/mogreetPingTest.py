@@ -6,12 +6,14 @@ import requests
 #import schedule
 import random
 import time
+import subprocess
 
 mogreeturl = 'http://www-test.uim.univision.com/mogreetConduit.do?isTest=1'
 
 def validate(mogreeturl):
     
     randNumber = random.randint(1,2)
+    statusCheck = 'status:fail, type:xml'
     
     if randNumber == 2:
         mogreeturl = mogreeturl + '&format=JSON'
@@ -25,9 +27,9 @@ def validate(mogreeturl):
             jsonData = json.loads(data.read())
     
             if jsonData['response']['status'] != 'success':
-                print 'failed'
+                statusCheck = 'Status:fail, Type:JSON'
             else:
-                print 'success JSON'
+                statusCheck = 'Status:success, Type:JSON'
     
         elif response.headers['Content-Type'].find('xml') > -1:
             urllib.urlretrieve (mogreeturl, '/tmp/mogreet.xml')
@@ -36,9 +38,11 @@ def validate(mogreeturl):
             for node in xmlData.iter('response'):
                 status = node.attrib.get('status')
                 if status != 'success':
-                    print 'failed'
+                    statusCheck = 'Status:fail, Type:XML'
                 else:
-                    print 'success XML'
+                    statusCheck = 'Status:success, Type:XML'
+        
+        subprocess.check_call(['/usr/bin/osascript', '-e', 'display notification "' + statusCheck + '" with title "MoGreet Validator"'])
 
 n = 300
 while n > 0:

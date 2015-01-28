@@ -1,3 +1,4 @@
+#!/usr/local/bin/python
 import json
 import xml.etree.ElementTree as ET
 import urllib2

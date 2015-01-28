@@ -10,3 +10,23 @@ python/.pydevproject
 *.svg
 
 *.pyc
+
+python/.idea/.name
+
+python/.idea/encodings.xml
+
+python/.idea/misc.xml
+
+python/.idea/modules.xml
+
+python/.idea/python.iml
+
+python/.idea/scopes/scope_settings.xml
+
+python/.idea/vcs.xml
+
+python/.idea/workspace.xml
+
+python/nbproject/project.properties
+
+python/nbproject/project.xml

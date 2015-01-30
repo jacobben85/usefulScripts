@@ -31,3 +31,6 @@ python/nbproject/project.properties
 
 python/nbproject/project.xml
 /python/nbproject/private/
+python/phantomjs/ghostdriver.log
+
+python/phantomjs/ghostdriver.log

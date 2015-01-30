@@ -106,6 +106,14 @@ loadUrl = function (address, enableLogs) {
 
     };
 
+    page.onConsoleMessage = function(msg, lineNum, sourceId) {
+        console.log('CONSOLE: ' + msg + ' (from line #' + lineNum + ' in "' + sourceId + '")');
+    };
+
+    page.onAlert = function(msg) {
+        console.log('ALERT: ' + msg);
+    };
+
     /**
      * Phantom JS open page
      * 

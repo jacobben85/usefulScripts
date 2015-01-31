@@ -22,7 +22,7 @@ class CacheMemecached:
     
     def memcache_service_status(self):
         try:
-            checkService = subprocess.check_output("ps aux | grep '[m]emcached2'", shell=True)
+            checkService = subprocess.check_output("ps aux | grep '[m]emcached'", shell=True)
             if len(checkService.splitlines()) > 0:
                 self.status = True
         except:
@@ -32,8 +32,25 @@ class CacheMemecached:
         return self.status
 
 
-args = ["phantomjs", "pagevalidator.js", "http://www.univision.com"]
-result = subprocess.check_output(args)
+class PhantomJsWrapper:
+    def __init__(self):
+        self.args = ["phantomjs", "pagevalidator.js"]
+        self.response = False
+        
+    def get_urls(self, url):
+        self.args = self.args + [url]
+        self.get_response()
+        return self.response
+        
+    def get_response(self):
+        try:
+            self.response = subprocess.check_output(self.args)
+        except:    
+            self.response = False
+    
+
+#args = ["phantomjs", "pagevalidator.js", "http://www.univision.com"]
+result = PhantomJsWrapper().get_urls("http://www.univision.com")
 
 key = 'test'
 
@@ -43,8 +60,11 @@ if mc != False:
     mc.set(key, result, 60)
     result = mc.get(key)
     print 'set and get from cache'
+else:
+    print 'memcache not found'
+    
+if result != False:
+    xmlTree = ET.ElementTree(ET.fromstring(result))
 
-xmlTree = ET.ElementTree(ET.fromstring(result))
-
-for url in xmlTree.iter('url'):
-	print url.text
+    for url in xmlTree.iter('url'):
+            print url.text

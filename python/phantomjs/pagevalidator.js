@@ -96,7 +96,7 @@ if (system.args.length === 1) {
                     beingProcessed = domainComplete + beingProcessed;
                 }
 
-                if (beingProcessed.indexOf(domain) !== -1) {
+                if (beingProcessed.indexOf(domainComplete) === 0) {
                     beingProcessed = cleanupUrl(beingProcessed);
                     addToUrlList(beingProcessed);
                 }

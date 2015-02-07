@@ -123,7 +123,7 @@ def url_processor(url_q, processed_list, mc):
 
 
 url_q = Queue()
-url = "http://www.univision.com"
+url = "http://puertorico.univision.com"
 url_q.put(url)
 processed_list = []
 mc = CacheMemcached()

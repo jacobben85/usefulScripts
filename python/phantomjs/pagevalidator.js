@@ -50,7 +50,7 @@ generateResponse = function () {
     var message = "", metadataString = "", urllistString = "";
 
     while (metaData.length) {
-        metadataString = metadataString + "<info>" + metaData.shift() + "</info>";
+        metadataString = metadataString + "<info>" + metaData.shift().replace('&', '&amp;') + "</info>";
     }
     metadataString = "<metadata>" + metadataString + "</metadata>";
 

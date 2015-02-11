@@ -12,11 +12,10 @@ class UnivisionSpider(scrapy.Spider):
 
     def parse(self, response):
 
-        for title in response.xpath('//title'):
-            item = UnivisionItem()
-            item['title'] = title.xpath('text()').extract()
-            item['link'] = response.url
-            yield item
+        item = UnivisionItem()
+        item['status'] = response.status
+        item['link'] = response.url
+        yield item
 
         for url in response.xpath('//a/@href').extract():
             if 'www.univision.com' in url:

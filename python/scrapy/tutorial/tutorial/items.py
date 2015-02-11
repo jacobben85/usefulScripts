@@ -21,5 +21,5 @@ class DmozItem(scrapy.Item):
 
 
 class UnivisionItem(scrapy.Item):
-    title = scrapy.Field()
+    status = scrapy.Field()
     link = scrapy.Field()

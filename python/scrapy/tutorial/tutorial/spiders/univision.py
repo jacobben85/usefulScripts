@@ -4,6 +4,7 @@ from tutorial.items import UnivisionItem
 
 
 class UnivisionSpider(scrapy.Spider):
+    handle_httpstatus_list = range(400, 427) + range(500, 511)
     name = "univision"
     allowed_domains = ["www.univision.com"]
     start_urls = (
@@ -15,8 +16,10 @@ class UnivisionSpider(scrapy.Spider):
         item = UnivisionItem()
         item['status'] = response.status
         item['link'] = response.url
+        item['referer'] = response.request.headers.get('Referer', None)
         yield item
 
-        for url in response.xpath('//a/@href').extract():
-            if 'www.univision.com' in url:
-                yield scrapy.Request(url, callback=self.parse)
+        if response.status is 200:
+            for url in response.xpath('//a/@href').extract():
+                if 'www.univision.com' in url:
+                    yield scrapy.Request(url, callback=self.parse)

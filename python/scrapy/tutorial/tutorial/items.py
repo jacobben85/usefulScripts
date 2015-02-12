@@ -23,3 +23,4 @@ class DmozItem(scrapy.Item):
 class UnivisionItem(scrapy.Item):
     status = scrapy.Field()
     link = scrapy.Field()
+    referer = scrapy.Field()

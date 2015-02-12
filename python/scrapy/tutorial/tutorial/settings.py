@@ -10,7 +10,7 @@
 import sys
 import MySQLdb
 
-BOT_NAME = 'tutorial'
+BOT_NAME = 'uvn.bot'
 
 SPIDER_MODULES = ['tutorial.spiders']
 NEWSPIDER_MODULE = 'tutorial.spiders'
@@ -18,10 +18,10 @@ NEWSPIDER_MODULE = 'tutorial.spiders'
 ITEM_PIPELINES = [
     'tutorial.pipelines.UnivisionPipeline',
 ]
-
-DOWNLOADER_MIDDLEWARES = {
-    'scrapy.contrib.downloadermiddleware.useragent.UserAgentMiddleware': None,
-}
+#
+# DOWNLOADER_MIDDLEWARES = {
+#     'scrapy.contrib.downloadermiddleware.useragent.UserAgentMiddleware': None,
+# }
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'tutorial (+http://www.yourdomain.com)'

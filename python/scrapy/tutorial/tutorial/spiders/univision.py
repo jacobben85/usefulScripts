@@ -6,9 +6,9 @@ from tutorial.items import UnivisionItem
 class UnivisionSpider(scrapy.Spider):
     handle_httpstatus_list = range(400, 427) + range(500, 511)
     name = "univision"
-    allowed_domains = ["www.univision.com"]
+    allowed_domains = ["puertorico.univision.com"]
     start_urls = (
-        'http://www.univision.com/',
+        'http://puertorico.univision.com/',
     )
 
     def parse(self, response):
@@ -21,5 +21,8 @@ class UnivisionSpider(scrapy.Spider):
 
         if response.status is 200:
             for url in response.xpath('//a/@href').extract():
-                if 'www.univision.com' in url:
+                if 'puertorico.univision.com' in url:
                     yield scrapy.Request(url, callback=self.parse)
+        else:
+            print response.status
+            print response

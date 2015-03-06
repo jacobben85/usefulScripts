@@ -8,6 +8,7 @@
 /* global exports, require */
 var exec = require("child_process").exec;
 var querystring = require("querystring");
+var fs = require("fs");
 
 function start_old(response) {
     exec("ls -lah", function (error, stdout, stderr) { 
@@ -44,11 +45,26 @@ function start(response, postData) {
     response.end();
 }
 function upload(response, postData) {
-    response.writeHead(200, {"Content-Type": "text/plain"});
+    response.writeHead(200, {"Content-Type": "text/html"});
+    response.write('<img src="/show" />');
     response.write(querystring.parse(postData).text);
     response.end();
     console.log("Request handler 'upload' was called.");
 }
+function show(response, postDate) {
+    fs.readFile("/tmp/netbean.png", "binary", function(error, file) {
+        if (error) {
+            response.writeHead(500, {"Content-Type": "text/plain"});
+            response.write("Could not load the image");
+            response.end();
+        } else {
+            response.writeHead(200, {"Content-Type": "image/png"});
+            response.write(file, "binary");
+            response.end();
+        }
+    });
+}
 
 exports.start = start;
 exports.upload = upload;
+exports.show = show;

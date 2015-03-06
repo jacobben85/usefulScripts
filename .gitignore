@@ -1,3 +1,6 @@
+/node/npm-debug.log
+/node/nbproject/project.xml
+/node/nbproject/project.properties
 /chart.svg
 /nbproject/project.xml
 /nbproject/project.properties
@@ -34,3 +37,4 @@ python/nbproject/project.xml
 python/phantomjs/ghostdriver.log
 
 python/phantomjs/ghostdriver.log
+/node/nbproject/private/

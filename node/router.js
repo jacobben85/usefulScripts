@@ -6,11 +6,11 @@
 
 /* global exports */
 
-function route(handle, pathname, response) {
+function route(handle, pathname, response, postData) {
     console.log("About to route a request for " + pathname); 
     if (typeof handle[pathname] === 'function') {
         
-        handle[pathname](response);
+        handle[pathname](response, postData);
         
     } else {
         response.writeHead(404, {"Content-Type": "text/plain"});

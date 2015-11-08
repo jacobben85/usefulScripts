@@ -1,0 +1,19 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Mar 6, 2015, 11:49:47 PM
+    Author     : jbjohn
+*/
+
+$font-stack:    Helvetica, sans-serif;
+$primary-color: #333;
+$bgcolor : red;
+
+body {
+  font: 100% $font-stack;
+  color: $primary-color;
+  background-color: $bgcolor;
+}

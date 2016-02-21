@@ -16,5 +16,6 @@ if [ -r ~/.dbus/Xdbus ]; then
   . ~/.dbus/Xdbus
 fi
 
-notify-send "Time Check" "$(date)" -i ~/usefulScripts/logo.png -t 5000
+CURRENT=`pwd`
+notify-send "Time Check" "$(date)" -i "$CURRENT/logo.png" -t 5000
 # paplay ~/usefulScripts/beep.ogg
